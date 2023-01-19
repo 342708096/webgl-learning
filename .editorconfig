@@ -1,0 +1,17 @@
+# top-most EditorConfig file
+root = true
+
+# All Files
+[*]
+charset = utf-8                  # Set default charset
+indent_style = space             # 2 space indentation
+indent_size = 2
+end_of_line = lf                 # Unix-style
+insert_final_newline = true      # newlines with a newline ending every file
+trim_trailing_whitespace = true  # remove any whitespace characters preceding newline characters
+max_line_length = 160            # Forces hard line wrapping after the amount of characters specified
+
+# Markdown Files
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false
