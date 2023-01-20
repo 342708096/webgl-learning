@@ -1,4 +1,3 @@
-/* eslint-disable no-bitwise */
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import gsap from 'gsap'
@@ -23,7 +22,13 @@ scene.add(camera)
 camera.position.set(0, 0, 10)
 
 // 4. 添加几何体
-const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
+const cubeGeometry = new THREE.BufferGeometry()
+
+const vertices = Float32Array([
+  
+]) // 初始化32位浮点数数组
+
+
 const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 const cubeFolder = gui.addFolder('设置立方体')
@@ -49,13 +54,12 @@ cubeFolder.add({
 
 cubeFolder.add(cubeMaterial, 'wireframe')
 
-cube.rotation.set(Math.PI / 4, 0, 0)
 scene.add(cube)
 
 // 5. 初始化渲染器
 const renderer = new THREE.WebGLRenderer();
 
-// renderer.setSize(eleWidth, eleHeight, false);
+renderer.setSize(eleWidth, eleHeight);
 
 // 6. 轨道控制器
 const controller = new OrbitControls(camera, renderer.domElement);
@@ -63,26 +67,7 @@ controller.enableDamping = true
 // 7. 添加坐标轴辅助器
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
-// 8 设置时钟
-// const clock = new THREE.Clock()
 
-// 9 使用gsap设置动画
-const animation = gsap.to(cube.position, {
-  x: 5,
-  duration: 5,
-  ease: 'power1.inOut',
-  yoyo: true, // 往返运动
-  repeat: -1, // 无限循环
-})
-gsap.to(cube.rotation, { x: 2 * Math.PI, duration: 5 })
-
-rootEle.addEventListener('click', () => {
-  if (animation.isActive()) {
-    animation.pause()
-  } else {
-    animation.resume()
-  }
-})
 
 rootEle.appendChild(renderer.domElement);
 
@@ -91,17 +76,9 @@ observeResize(rootEle, ({ width, height }) => {
   camera.aspect = width / height;
   camera.updateProjectionMatrix(); // 更新宽高比后需要更新投影矩阵
 
-  const canvas = renderer.domElement;
-  const pixelRatio = window.devicePixelRatio;
-  const containerDeviceWidth = width * pixelRatio | 0;
-  const containerDeviceHeight = height * pixelRatio | 0;
-  const needResize = canvas.width !== containerDeviceWidth || canvas.height !== containerDeviceHeight
-  if (needResize) {
-    // 更新画纸尺寸而不是画布尺寸
-    renderer.setSize(width, height, false);
-  }
-  // renderer.setPixelRatio(window.devicePixelRatio);
-})
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+}, 200)
 
 // 双击进入全屏
 rootEle.addEventListener('dblclick', () => {

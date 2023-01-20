@@ -10,6 +10,7 @@ module.exports = {
     project: ['./tsconfig.json'],
   },
   rules: {
+    "no-bitwise": "off",
     "class-methods-use-this": "off",
     "no-plusplus": "off",
     "no-param-reassign": "off",
