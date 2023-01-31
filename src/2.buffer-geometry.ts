@@ -21,13 +21,19 @@ scene.add(camera)
 // 3. 设置相机位置
 camera.position.set(0, 0, 10)
 
-// 4. 添加几何体
+// 4. 添加缓冲区几何体
 const cubeGeometry = new THREE.BufferGeometry()
-
-const vertices = Float32Array([
-  
+// 顶点数组
+const vertices = new Float32Array([
+  -1.0, -1.0, 1.0,
+  1.0, -1.0, 1.0,
+  1.0, 1.0, 1.0,
+  1.0, 1.0, 1.0,
+  -1.0, 1.0, 1.0,
+  -1.0, -1.0, 1.0,
 ]) // 初始化32位浮点数数组
 
+cubeGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3))
 
 const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
@@ -68,7 +74,6 @@ controller.enableDamping = true
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
-
 rootEle.appendChild(renderer.domElement);
 
 // 自适应容器大小
@@ -78,7 +83,7 @@ observeResize(rootEle, ({ width, height }) => {
 
   renderer.setSize(width, height);
   renderer.setPixelRatio(window.devicePixelRatio);
-}, 200)
+})
 
 // 双击进入全屏
 rootEle.addEventListener('dblclick', () => {
