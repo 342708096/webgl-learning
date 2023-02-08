@@ -79,6 +79,7 @@
     "gsap": "^3.11.4",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
+    "stats.js": "^0.17.0",
     "three": "^0.148.0"
   }
 }
