@@ -21,7 +21,6 @@ scene.add(camera)
 // 3. 设置相机位置
 camera.position.set(0, 0, 10)
 
-
 // 4. 添加缓冲区几何体
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
 

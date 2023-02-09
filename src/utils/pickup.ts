@@ -4,8 +4,10 @@ export function pickupFactory(
   canvas: HTMLCanvasElement,
   camera: THREE.Camera,
   scene: THREE.Scene,
+  pickupFirst?: boolean,
   callback?: (event: MouseEvent, objects: THREE.Mesh[]) => void,
   fallback?: (event: MouseEvent) => void,
+  filter?: ((object: THREE.Mesh) => boolean),
 ) {
   return (event: MouseEvent) => {
     const { clientWidth } = canvas
@@ -24,11 +26,22 @@ export function pickupFactory(
       for (const intersect of intersects) {
         if ((intersect.object as THREE.Mesh).isMesh) {
           objects.push(intersect.object as THREE.Mesh)
+          if (pickupFirst) {
+            break
+          }
         }
       }
       if (objects.length) {
-        callback?.(event, objects)
-        return
+        if (filter) {
+          const filtered = objects.filter(filter)
+          if (filtered.length) {
+            callback?.(event, filtered)
+            return
+          }
+        } else {
+          callback?.(event, objects)
+          return
+        }
       }
     }
     fallback?.(event)

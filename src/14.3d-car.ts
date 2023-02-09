@@ -203,14 +203,15 @@ function addDiretionalLight(position: [number, number, number]) {
   [-5, 10, 0],
 ].forEach(addDiretionalLight)
 
-const pickupHandler = pickupFactory(canvas, camera, scene, (_, objects: Mesh[]) => {
-  (objects[0].material as MeshStandardMaterial).color.set(0x000000)
+const pickupHandler = pickupFactory(canvas, camera, scene, true, (_, objects: Mesh[]) => {
+  console.log(objects[0])
 })
 
 const mouseHandler = pickupFactory(
   canvas,
   camera,
   scene,
+  true,
   () => {
     canvas.style.cursor = 'pointer'
   },
